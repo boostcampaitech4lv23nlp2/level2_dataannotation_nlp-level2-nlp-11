@@ -32,7 +32,7 @@ def train(conf) -> None:
 
     # setting model hyperparameter
     model_config = AutoConfig.from_pretrained(conf.model.model_name)
-    model_config.num_labels = 12
+    model_config.num_labels = 13
 
     model = AutoModelForSequenceClassification.from_pretrained(
         conf.model.model_name, config=model_config

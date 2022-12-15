@@ -8,18 +8,19 @@ from sklearn.metrics import (accuracy_score, f1_score, precision_score,
 def klue_re_micro_f1(preds, labels):
     """KLUE-RE micro f1 (except no_relation)"""
     label_list = [
-        'country:year_of_victory',
-        'no_relation',
-        'country:faced_country',
         'competition:year',
-        'country:population',
-        'country:number_of_wins',
-        'country:soccer_player',
-        'org:alternative_name',
-        'parent relationship:sub relationship',
-        'country:game_results',
+        'competition:place',
         'org:country_of_headquarters',
-        'competition:place'
+        'country:number_of_wins',
+        'parent relationship:sub relationship',
+        'country:population',
+        'country:faced_country',
+        'org:alternative_name',
+        'no_relation',
+        'country:soccer_player',
+        'country:game_results',
+        'country:FIFA_ranking',
+        'country:year_of_victory'
         ]
     no_relation_label_idx = label_list.index("no_relation")
     label_indices = list(range(len(label_list)))
@@ -32,10 +33,10 @@ def klue_re_micro_f1(preds, labels):
 
 def klue_re_auprc(probs, labels):
     """KLUE-RE AUPRC (with no_relation)"""
-    labels = np.eye(12)[labels]
+    labels = np.eye(13)[labels]
 
-    score = np.zeros((12,))
-    for c in range(12):
+    score = np.zeros((13,))
+    for c in range(13):
         targets_c = labels.take([c], axis=1).ravel()
         preds_c = probs.take([c], axis=1).ravel()
         precision, recall, _ = sklearn.metrics.precision_recall_curve(
